@@ -1,14 +1,15 @@
 
 require 'nokogiri'
-xml_file = File.read("shows.xml")
+require 'json'
+
+xml_file = File.read(params[:file][:tempfile])
 doc = Nokogiri::XML.parse(xml_file)
 
-array = doc.search('add').map{ |node| 
+array = doc.search('add').map{ |node|
   {
       Name: node['description'],
-      SchemaRef: node['namespaceUri']    
+      SchemaRef: node['namespaceUri']
   }
 }
-    puts array
-    
 
+array.to_json
